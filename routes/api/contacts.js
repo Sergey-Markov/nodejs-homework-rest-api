@@ -91,7 +91,6 @@ router.put("/:contactId", async (req, res, next) => {
       body
     );
     if (!updatedContact) {
-      // throw new createError.NotFound(`Contact with id:${contactId} not found`);
       res.status(404).json({
         status: 404,
         message: `Contact with id:${contactId} not found`,
