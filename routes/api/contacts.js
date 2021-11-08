@@ -2,7 +2,9 @@ const express = require("express");
 const contactsOperations = require("../../model");
 const router = express.Router();
 const createError = require("http-errors");
-const Joi = require("joi");
+
+const { validation } = require("../../middlewares");
+const { validationsSchemes } = require("../../validations");
 
 // const contactPostValidation = (req, res, next) => {
 //   const joiSchema = Joi.object({
@@ -30,27 +32,6 @@ const Joi = require("joi");
 //   }
 //   next();
 // };
-const joiSchemaOnPOST = Joi.object({
-  name: Joi.string().required(),
-  email: Joi.string().email().required(),
-  phone: Joi.number().positive().required(),
-});
-const joiSchemaOnPUT = Joi.object({
-  name: Joi.string(),
-  email: Joi.string().email(),
-  phone: Joi.number().positive(),
-});
-const validation = (joiSchema) => {
-  const validationMiddleware = (req, res, next) => {
-    const { error } = joiSchema.validate(req.body);
-    if (error) {
-      const newError = new createError(400, "missing fields");
-      next(newError);
-    }
-    next();
-  };
-  return validationMiddleware;
-};
 
 router.get("/", async (req, res, next) => {
   try {
@@ -86,17 +67,21 @@ router.get("/:contactId", async (req, res, next) => {
   }
 });
 
-router.post("/", validation(joiSchemaOnPOST), async (req, res, next) => {
-  try {
-    const newContact = await contactsOperations.addContact(req.body);
-    res.status(201).json({
-      status: 201,
-      data: { ...newContact },
-    });
-  } catch (error) {
-    next(error);
+router.post(
+  "/",
+  validation(validationsSchemes.joiSchemaOnPOST),
+  async (req, res, next) => {
+    try {
+      const newContact = await contactsOperations.addContact(req.body);
+      res.status(201).json({
+        status: 201,
+        data: { ...newContact },
+      });
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 router.delete("/:contactId", async (req, res, next) => {
   const { contactId } = req.params;
@@ -113,7 +98,7 @@ router.delete("/:contactId", async (req, res, next) => {
 
 router.put(
   "/:contactId",
-  validation(joiSchemaOnPUT),
+  validation(validationsSchemes.joiSchemaOnPUT),
   async (req, res, next) => {
     try {
       const body = req.body;
