@@ -4,7 +4,7 @@ const { contacts: ctrl } = require("../../controllers");
 const { validation, controllerWrapper } = require("../../middlewares");
 const { validationsSchemes } = require("../../validations");
 
-router.get("/", ctrl.getContactsList);
+router.get("/", controllerWrapper(ctrl.getContactsList));
 
 router.get("/:contactId", ctrl.getById);
 
