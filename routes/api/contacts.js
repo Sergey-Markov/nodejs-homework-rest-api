@@ -6,18 +6,25 @@ const { validationsSchemes } = require("../../validations");
 
 router.get("/", controllerWrapper(ctrl.getContactsList));
 
-router.get("/:contactId", ctrl.getById);
+router.get("/:contactId", controllerWrapper(ctrl.getById));
 
-router.post("/", validation(validationsSchemes.joiSchemaOnPOST), ctrl.add);
+router.post(
+  "/",
+  validation(validationsSchemes.joiSchemaOnPOST),
+  controllerWrapper(ctrl.add)
+);
 
-router.delete("/:contactId", ctrl.removeContact);
+router.delete("/:contactId", controllerWrapper(ctrl.removeContact));
 
 router.put(
   "/:contactId",
   validation(validationsSchemes.joiSchemaOnPUT),
-  ctrl.updateById
+  controllerWrapper(ctrl.updateById)
 );
 
-router.patch("/:contactId/favorite", ctrl.patchStatusOfContact);
+router.patch(
+  "/:contactId/favorite",
+  controllerWrapper(ctrl.patchStatusOfContact)
+);
 
 module.exports = router;

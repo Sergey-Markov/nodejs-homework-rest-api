@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const { validation, controllerWrapper } = require("../../middlewares");
-// const { auth: ctrl } = require("../../controllers");
+const { auth: ctrl } = require("../../controllers");
 
-// router.post("/registration", ctrl.registration);
+router.post("/registration", controllerWrapper(ctrl.registration));
 
 module.exports = router;
