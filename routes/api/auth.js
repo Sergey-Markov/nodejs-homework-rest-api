@@ -6,8 +6,14 @@ const { validationsSchemes } = require("../../validations");
 
 router.post(
   "/registration",
-  validation(validationsSchemes.joiSchemaOnRegistration),
+  validation(validationsSchemes.joiSchemaOnAuth),
   controllerWrapper(ctrl.registration)
+);
+
+router.post(
+  "/login",
+  validation(validationsSchemes.joiSchemaOnAuth),
+  controllerWrapper(ctrl.login)
 );
 
 module.exports = router;
