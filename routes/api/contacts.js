@@ -8,7 +8,7 @@ const {
 } = require("../../middlewares");
 const { validationsSchemes } = require("../../validations");
 
-router.get("/", authenticate, controllerWrapper(ctrl.getContactsList));
+router.get("/", authenticate, controllerWrapper(ctrl.getContactsList)); //http://localhost:3000/api/contacts?page=1&limit=10   whith pagination
 
 router.get("/:contactId", authenticate, controllerWrapper(ctrl.getById));
 

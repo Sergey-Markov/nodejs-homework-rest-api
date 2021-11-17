@@ -11,7 +11,7 @@ const authenticate = async (req, res, next) => {
     }
     try {
       const { id } = jwt.verify(token, SECRET_kEY);
-      const user = await User.findById(id, "_id email"); // вторым аргументом можна указывать перечень полей которые мы хотим получить
+      const user = await User.findById(id, "_id email token"); // вторым аргументом можна указывать перечень полей которые мы хотим получить
       if (!user) {
         throw new NotFound("User not found");
       }
