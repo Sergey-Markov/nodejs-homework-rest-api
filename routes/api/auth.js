@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { validation, controllerWrapper } = require("../../middlewares");
+const {
+  validation,
+  controllerWrapper,
+  authenticate,
+} = require("../../middlewares");
 const { auth: ctrl } = require("../../controllers");
 const { validationsSchemes } = require("../../validations");
 
@@ -15,5 +19,7 @@ router.post(
   validation(validationsSchemes.joiSchemaOnAuth),
   controllerWrapper(ctrl.login)
 );
+
+router.post("/logout", authenticate, controllerWrapper(ctrl.logout)); //можно использовать GET-запрос, т.к., будет отсутствовать тело запроса
 
 module.exports = router;
