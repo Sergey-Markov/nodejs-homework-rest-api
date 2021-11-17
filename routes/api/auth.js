@@ -24,4 +24,10 @@ router.post("/logout", authenticate, controllerWrapper(ctrl.logout)); //можн
 
 router.get("/current", authenticate, controllerWrapper(ctrl.current));
 
+router.patch(
+  "/subscription",
+  authenticate,
+  controllerWrapper(ctrl.subscriptionChange)
+);
+
 module.exports = router;
