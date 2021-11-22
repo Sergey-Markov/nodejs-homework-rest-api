@@ -5,6 +5,14 @@ const { SECRET_kEY } = process.env;
 
 const authenticate = async (req, res, next) => {
   try {
+    if (req.headers.authorization === undefined) {
+      return res.status(401).json({
+        status: "Unauthorized",
+        code: 401,
+        message: "Please login",
+      });
+    }
+
     const [bearer, token] = req.headers.authorization.split(" ");
     if (bearer !== "Bearer") {
       throw new Unauthorized("Please get authorization, you are unauthorized");
@@ -13,7 +21,11 @@ const authenticate = async (req, res, next) => {
       const { id } = jwt.verify(token, SECRET_kEY);
       const user = await User.findById(id, "_id email token"); // вторым аргументом можна указывать перечень полей которые мы хотим получить
       if (!user) {
-        throw new NotFound("User not found");
+        res.status(404).json({
+          status: "NotFound",
+          code: 404,
+          message: "User not found",
+        });
       }
       if (!user.token) {
         throw new Unauthorized("User unauthorized");
