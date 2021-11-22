@@ -3,7 +3,6 @@ const { Contact } = require("../../models");
 const patchStatusOfContact = async (req, res) => {
   const { favorite } = req.body;
   const { contactId } = req.params;
-  console.log(favorite);
   if (favorite === undefined) {
     res.status(400).json({
       status: 400,

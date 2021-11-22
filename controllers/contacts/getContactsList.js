@@ -23,7 +23,6 @@ const getContactsList = async (req, res) => {
         owner: _id,
         favorite: favorite,
       });
-      console.log(listOfFavoriteContacts);
       res.status(200).json({
         status: "Succes",
         code: 200,
