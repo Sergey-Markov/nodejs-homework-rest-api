@@ -4,9 +4,9 @@ require("dotenv").config();
 const { ADMIN_PASSWORD } = process.env;
 
 const subscriptionChange = async (req, res) => {
-  const { id, password, newValue } = req.body;
+  const { id, password, newValueOfSubscription } = req.body;
 
-  if (!id || !password || !newValue) {
+  if (!id || !password || !newValueOfSubscription) {
     res.status(400).json({
       message: "missing fields",
     });
@@ -20,7 +20,7 @@ const subscriptionChange = async (req, res) => {
   const newUserSubscription = await User.findByIdAndUpdate(
     id,
     {
-      subscription: newValue,
+      subscription: newValueOfSubscription,
     },
     { new: true }
   );
