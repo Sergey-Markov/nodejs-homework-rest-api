@@ -5,7 +5,6 @@ const { ADMIN_PASSWORD } = process.env;
 
 const subscriptionChange = async (req, res) => {
   const { id, password, newValue } = req.body;
-  console.log(req.body);
 
   if (!id || !password || !newValue) {
     res.status(400).json({
@@ -25,7 +24,6 @@ const subscriptionChange = async (req, res) => {
     },
     { new: true }
   );
-  console.log(newUserSubscription);
   res.status(200).json({
     status: "Success",
     code: 200,
