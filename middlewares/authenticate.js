@@ -7,7 +7,7 @@ const authenticate = async (req, res, next) => {
   try {
     const [bearer, token] = req.headers.authorization.split(" ");
     if (bearer !== "Bearer") {
-      throw new Unauthorized("Please get authorization, you are unaythorized");
+      throw new Unauthorized("Please get authorization, you are unauthorized");
     }
     try {
       const { id } = jwt.verify(token, SECRET_kEY);
