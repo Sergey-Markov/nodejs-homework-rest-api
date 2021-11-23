@@ -12,8 +12,13 @@ const joiSchemaOnPUT = Joi.object({
   phone: Joi.number().positive(),
   favorite: Joi.bool().default(false),
 });
+const joiSchemaOnAuth = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().min(3).max(15).required(),
+});
 
 module.exports = {
   joiSchemaOnPOST,
   joiSchemaOnPUT,
+  joiSchemaOnAuth,
 };
