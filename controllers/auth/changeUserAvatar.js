@@ -9,7 +9,6 @@ const changeUserAvatar = async (req, res) => {
   const { email, password } = req.body;
 
   let filedata = req.file;
-  console.log(filedata);
   if (!filedata) {
     return res.status(400).json({
       status: "Bad request",

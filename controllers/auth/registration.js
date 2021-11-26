@@ -10,7 +10,6 @@ const defAvatarPath = path.join(
   "../../public/avatars/",
   "avatarkaQttR.jpg"
 );
-// console.log(defAvatarPath);
 
 const registration = async (req, res) => {
   const { email, password } = req.body;
