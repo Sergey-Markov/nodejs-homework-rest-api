@@ -7,8 +7,16 @@ const userAvatarDir = path.join(__dirname, "../../", "public/avatars");
 
 const changeUserAvatar = async (req, res) => {
   const { email, password } = req.body;
-  const { path: tempDir, originalname } = req.file;
 
+  let filedata = req.file;
+  console.log(filedata);
+  if (!filedata) {
+    return res.status(400).json({
+      status: "Bad request",
+      message: "wrong mime type of file",
+    });
+  }
+  const { path: tempDir, originalname } = req.file;
   // проверка на коректного юзера для изменения картинки только тем юзером кому пренадлежит акаунт
   const [bearer, token] = req.headers.authorization.split(" ");
   const currentUser = await User.findOne({ token: token });

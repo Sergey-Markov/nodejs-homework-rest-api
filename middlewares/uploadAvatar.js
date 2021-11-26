@@ -15,8 +15,20 @@ const uploadConfig = multer.diskStorage({
   },
 });
 
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/jpeg"
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
 const uploadAwatarMiddleware = multer({
   storage: uploadConfig,
+  fileFilter: fileFilter,
 });
 
 module.exports = uploadAwatarMiddleware;
