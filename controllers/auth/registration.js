@@ -24,13 +24,13 @@ const registration = async (req, res) => {
   const newUser = await User.create({
     email,
     password: hashPassword,
-    avatarURL,
+    avatarURL: `https:${avatarURL}`,
   });
   res.status(201).json({
     user: {
       email: email,
       subscription: newUser.subscription,
-      avatarURL: avatarURL,
+      avatarURL: `https:${avatarURL}`,
     },
   });
 };
