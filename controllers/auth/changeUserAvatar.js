@@ -6,8 +6,7 @@ const { User } = require("../../models");
 const userAvatarDir = path.join(__dirname, "../../", "public/avatars");
 
 const changeUserAvatar = async (req, res) => {
-  const { email, password } = req.body;
-
+  const { email, token } = req.user;
   let filedata = req.file;
   if (!filedata) {
     return res.status(400).json({
@@ -15,23 +14,9 @@ const changeUserAvatar = async (req, res) => {
       message: "wrong mime type of file",
     });
   }
+
   const { path: tempDir, originalname } = req.file;
-  // проверка на коректного юзера для изменения картинки только тем юзером кому пренадлежит акаунт
-  const [bearer, token] = req.headers.authorization.split(" ");
-  const currentUser = await User.findOne({ token: token });
-  if (currentUser.email !== email) {
-    return res.status(403).json({
-      status: "Forbidden",
-      code: 403,
-      message:
-        "Forbidden - you don`t not have permission to access the content",
-    });
-  }
-  if (!email || !password) {
-    res.status(400).json({
-      message: "missing field of request email or password",
-    });
-  }
+
   try {
     const resultUpload = path.join(
       userAvatarDir,
@@ -56,7 +41,7 @@ const changeUserAvatar = async (req, res) => {
     );
 
     const newUserAvatar = await User.findOneAndUpdate(
-      { email: email },
+      { token: token },
       {
         avatarURL,
       },
