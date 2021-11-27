@@ -4,6 +4,7 @@ const {
   validation,
   controllerWrapper,
   authenticate,
+  uploadAwatarMiddleware,
 } = require("../../middlewares");
 const { auth: ctrl } = require("../../controllers");
 const { validationsSchemes } = require("../../validations");
@@ -28,6 +29,13 @@ router.patch(
   "/subscription",
   authenticate,
   controllerWrapper(ctrl.subscriptionChange)
+);
+
+router.patch(
+  "/avatars",
+  authenticate,
+  uploadAwatarMiddleware.single("avatarURL"),
+  controllerWrapper(ctrl.changeUserAvatar)
 );
 
 module.exports = router;
